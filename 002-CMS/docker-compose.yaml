@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: cms
+      MYSQL_USER: cms
+      MYSQL_PASSWORD: cms-password
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ucms", "-pcms-password"]
+      interval: 5s
+      retries: 20
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DB_DSN: mysql:host=db;dbname=cms;charset=utf8mb4
+      DB_USER: cms
+      DB_PASSWORD: cms-password
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-change-me-please}
+    depends_on:
+      db:
+        condition: service_healthy

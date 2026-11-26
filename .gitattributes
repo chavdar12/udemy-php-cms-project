@@ -1,0 +1,14 @@
+# Normalize line endings: LF in the repo and on checkout everywhere
+* text=auto eol=lf
+
+*.php   text diff=php
+*.html  text diff=html
+*.css   text diff=css
+*.md    text diff=markdown
+*.yml   text
+*.json  text
+
+*.png   binary
+*.jpg   binary
+*.ico   binary
+*.pdf   binary
